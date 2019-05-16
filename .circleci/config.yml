@@ -61,7 +61,7 @@ jobs:
       - <<: *restore_cache
       - run:
           name: Run lint analyzer
-          command: ./gradlew lint
+          command: ./gradlew lintDebug
 
 workflows:
   version: 2
