@@ -1,4 +1,4 @@
-package com.mymovies;
+package com.mymovies.adapters;
 
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MYMoviesAdapter extends ListAdapter<String, MYMoviesAdapter.MYMoviesViewHolder> {
+import com.mymovies.data.models.Movie;
+
+public class MYMoviesAdapter extends ListAdapter<Movie, MYMoviesAdapter.MYMoviesViewHolder> {
 
     private static MyMoviesDiffResolver diffResolver = new MyMoviesDiffResolver();
     private static ViewGroup.LayoutParams defaultLayoutParameters =
@@ -41,23 +43,23 @@ public class MYMoviesAdapter extends ListAdapter<String, MYMoviesAdapter.MYMovie
             view = itemView;
         }
 
-        void bind(String data) {
-            view.setText(data);
+        void bind(Movie data) {
+            view.setText(data.getTitle());
         }
     }
 
-    static class MyMoviesDiffResolver extends DiffUtil.ItemCallback<String> {
+    static class MyMoviesDiffResolver extends DiffUtil.ItemCallback<Movie> {
 
         MyMoviesDiffResolver() {
         }
 
         @Override
-        public boolean areItemsTheSame(@NonNull String oldItem, @NonNull String newItem) {
+        public boolean areItemsTheSame(@NonNull Movie oldItem, @NonNull Movie newItem) {
             return oldItem.hashCode() == newItem.hashCode();
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull String oldItem, @NonNull String newItem) {
+        public boolean areContentsTheSame(@NonNull Movie oldItem, @NonNull Movie newItem) {
             return oldItem.equals(newItem); // TODO Fix this with real logic
         }
     }
