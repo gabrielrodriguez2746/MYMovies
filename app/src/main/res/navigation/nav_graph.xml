@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/destination_home"
-        android:name="com.mymovies.fragments.MoviesListFragment"
+        android:name="com.mymovies.fragments.PopularMoviesListFragment"
         android:label="@string/app_home" />
 </navigation>
