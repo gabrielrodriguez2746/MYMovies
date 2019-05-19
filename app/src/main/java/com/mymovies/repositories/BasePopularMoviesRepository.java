@@ -10,4 +10,6 @@ public interface BasePopularMoviesRepository {
 
     Single<List<Movie>> getPopularMoviesByPage(int page);
 
+    Single<Movie> getSingleMovieFromId(int movieId);
+
 }

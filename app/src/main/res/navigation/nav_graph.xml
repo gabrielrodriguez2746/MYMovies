@@ -7,5 +7,24 @@
     <fragment
         android:id="@+id/destination_home"
         android:name="com.mymovies.fragments.PopularMoviesListFragment"
-        android:label="@string/app_home" />
+        android:label="@string/app_home">
+
+        <action
+            android:id="@+id/action_detail"
+            app:destination="@id/destination_detail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/destination_detail"
+        android:name="com.mymovies.fragments.DetailMovieFragment"
+        android:label="">
+        <argument
+            android:name="movie_id"
+            android:defaultValue="-1"
+            app:argType="integer" />
+        <argument
+            android:name="detail_type"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
 </navigation>

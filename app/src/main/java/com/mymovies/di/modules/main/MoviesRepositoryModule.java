@@ -13,5 +13,5 @@ public abstract class MoviesRepositoryModule {
 
     @Binds
     @ActivityScope
-    abstract BasePopularMoviesRepository bindMoviesRepository(PopularMoviesRepository repository);
+    public abstract BasePopularMoviesRepository bindMoviesRepository(PopularMoviesRepository repository);
 }

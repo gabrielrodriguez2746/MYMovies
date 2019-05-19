@@ -2,9 +2,13 @@ package com.mymovies.helpers;
 
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+
+import java.util.List;
 
 public class Helpers {
 
@@ -38,6 +42,21 @@ public class Helpers {
         }, defaultValue);
     }
 
+    public static String mapToListedString(List<String> stringList, @Nullable String itemsSeparator) {
+        StringBuilder builder = new StringBuilder();
+        int stringListSize = stringList.size();
+        for (int index = 0; index < stringListSize; index++) {
+            if (itemsSeparator != null && stringListSize != 1) {
+                builder.append(itemsSeparator);
+            }
+            builder.append(stringList.get(index));
+            if (index < stringListSize - 1) {
+                builder.append(System.getProperty("line.separator"));
+            }
+        }
+        return builder.toString();
+    }
+
     private static <T> T tryOrDefault(GenericSupplier<T> function, T defaultValue) {
         T value = defaultValue;
         try {
@@ -58,8 +77,4 @@ public class Helpers {
         }
     }
 
-}
-
-interface GenericSupplier<T> {
-    T invoke();
 }

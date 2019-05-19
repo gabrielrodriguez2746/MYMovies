@@ -17,11 +17,11 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Singleton
 @Component(modules = {
         AndroidSupportInjectionModule.class,
-        FactoryModule.class,
-        AppConfigurationModule.class,
-        AppNetworkModule.class,
         AppActivityBuilder.class,
-        AppModule.class
+        AppConfigurationModule.class,
+        AppModule.class,
+        AppNetworkModule.class,
+        FactoryModule.class
 })
 public interface MainComponent extends AndroidInjector<MoviesApplication> {
 

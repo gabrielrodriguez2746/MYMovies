@@ -19,6 +19,7 @@ import com.mymovies.R;
 import com.mymovies.adapters.MYMoviesAdapter;
 import com.mymovies.databinding.FragmentMoviesListBinding;
 import com.mymovies.decorators.MediaSpaceDecorator;
+import com.mymovies.listeners.OnFragmentInteraction;
 import com.mymovies.models.RecyclerViewConfiguration;
 import com.mymovies.viewmodels.PopularMoviesViewModel;
 
@@ -30,7 +31,9 @@ import javax.inject.Inject;
 
 import dagger.android.support.AndroidSupportInjection;
 
-public class PopularMoviesListFragment extends Fragment {
+public class PopularMoviesListFragment extends Fragment implements MYMoviesAdapter.OnMovieClicked {
+
+    public static String POPULAR_FRAGMENT = "POPULAR_FRAGMENT";
 
     private FragmentMoviesListBinding binding;
     private MYMoviesAdapter adapter;
@@ -50,7 +53,7 @@ public class PopularMoviesListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (binding == null) {
             DisplayMetrics displayMetrics = getDisplayMetrics();
-            adapter = new MYMoviesAdapter(displayMetrics);
+            adapter = new MYMoviesAdapter(displayMetrics, this);
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies_list, container, false);
             binding.setRecyclerConfiguration(new RecyclerViewConfiguration(
                     new GridLayoutManager(getContext(), 2), adapter,
@@ -74,5 +77,11 @@ public class PopularMoviesListFragment extends Fragment {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics;
+    }
+
+    @Override
+    public void onMovieClicked(int movieId) {
+        ((OnFragmentInteraction) Objects.requireNonNull(getActivity()))
+                .onItemClicked(POPULAR_FRAGMENT, String.valueOf(movieId));
     }
 }
