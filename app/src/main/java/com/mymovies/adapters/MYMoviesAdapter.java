@@ -1,50 +1,66 @@
 package com.mymovies.adapters;
 
+import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mymovies.R;
 import com.mymovies.data.models.Movie;
+import com.mymovies.databinding.ItemMovieBinding;
 
-public class MYMoviesAdapter extends ListAdapter<Movie, MYMoviesAdapter.MYMoviesViewHolder> {
+import java.util.Objects;
+
+public class MYMoviesAdapter extends PagedListAdapter<Movie, MYMoviesAdapter.MYMoviesViewHolder> {
+
+    // TODO This should be provided as a factory
+    private ViewGroup.LayoutParams defaultLayoutParameters;
 
     private static MyMoviesDiffResolver diffResolver = new MyMoviesDiffResolver();
-    private static ViewGroup.LayoutParams defaultLayoutParameters =
-            new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
 
-    public MYMoviesAdapter() {
+
+    public MYMoviesAdapter(DisplayMetrics displayMetrics) {
         super(diffResolver);
+        defaultLayoutParameters = new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                (int) (displayMetrics.heightPixels * 0.43)
+        );
     }
 
     @NonNull
     @Override
     public MYMoviesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        TextView textView = new TextView(parent.getContext());
-        textView.setLayoutParams(defaultLayoutParameters);
-        return new MYMoviesViewHolder(textView);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        ItemMovieBinding binding = DataBindingUtil.inflate(layoutInflater,
+                R.layout.item_movie, parent, false);
+        View rootView = binding.getRoot();
+        rootView.setLayoutParams(defaultLayoutParameters);
+        return new MYMoviesViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MYMoviesViewHolder holder, int position) {
-        holder.bind(getItem(position));
+        holder.bind(Objects.requireNonNull(getItem(position)));
     }
 
     class MYMoviesViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView view;
+        private ItemMovieBinding binding;
 
-        MYMoviesViewHolder(@NonNull TextView itemView) {
-            super(itemView);
-            view = itemView;
+        MYMoviesViewHolder(@NonNull ItemMovieBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
         void bind(Movie data) {
-            view.setText(data.getTitle());
+            binding.setImageUrl(data.getPosterPath());
+            binding.setTitle(data.getTitle());
         }
     }
 

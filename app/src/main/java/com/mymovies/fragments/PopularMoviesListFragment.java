@@ -2,6 +2,7 @@ package com.mymovies.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.mymovies.R;
 import com.mymovies.adapters.MYMoviesAdapter;
 import com.mymovies.databinding.FragmentMoviesListBinding;
+import com.mymovies.decorators.MediaSpaceDecorator;
 import com.mymovies.models.RecyclerViewConfiguration;
 import com.mymovies.viewmodels.PopularMoviesViewModel;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -43,10 +49,12 @@ public class PopularMoviesListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (binding == null) {
-            adapter = new MYMoviesAdapter();
+            DisplayMetrics displayMetrics = getDisplayMetrics();
+            adapter = new MYMoviesAdapter(displayMetrics);
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies_list, container, false);
             binding.setRecyclerConfiguration(new RecyclerViewConfiguration(
-                    new GridLayoutManager(getContext(), 2), adapter));
+                    new GridLayoutManager(getContext(), 2), adapter,
+                    new MediaSpaceDecorator((getResources().getDimensionPixelSize(R.dimen.space_small)))));
         }
         return binding != null ? binding.getRoot() : super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -58,5 +66,13 @@ public class PopularMoviesListFragment extends Fragment {
             viewModel = ViewModelProviders.of(this, factory).get(PopularMoviesViewModel.class);
         }
         viewModel.getItemsLiveData().observe(getViewLifecycleOwner(), movies -> adapter.submitList(movies));
+    }
+
+
+    @NotNull
+    private DisplayMetrics getDisplayMetrics() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        return displayMetrics;
     }
 }

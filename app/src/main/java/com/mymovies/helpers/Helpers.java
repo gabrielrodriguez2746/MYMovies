@@ -13,15 +13,25 @@ public class Helpers {
             T internalValue = defaultValue;
             JsonElement element = jsonObject.get(key);
             if (element != null) {
-                if (!element.isJsonNull() && element.isJsonPrimitive()) {
-                    JsonPrimitive primitiveValue = element.getAsJsonPrimitive();
-                    if (primitiveValue.isBoolean())
-                        internalValue = convertInstanceOfObject(primitiveValue.getAsBoolean());
-                    else if (primitiveValue.isNumber())
-                        internalValue = convertInstanceOfObject(primitiveValue.getAsNumber());
-                    else if (primitiveValue.isString())
-                        internalValue = convertInstanceOfObject(primitiveValue.getAsString());
-                    else internalValue = convertInstanceOfObject(element);
+                if (!element.isJsonNull()) {
+                    if (element.isJsonPrimitive()) {
+                        JsonPrimitive primitiveValue = element.getAsJsonPrimitive();
+                        if (primitiveValue.isBoolean()) {
+                            internalValue = convertInstanceOfObject(primitiveValue.getAsBoolean());
+                        } else if (primitiveValue.isNumber()) {
+                            internalValue = convertInstanceOfObject(primitiveValue.getAsNumber());
+                        } else if (primitiveValue.isString()) {
+                            internalValue = convertInstanceOfObject(primitiveValue.getAsString());
+                        } else {
+                            internalValue = convertInstanceOfObject(primitiveValue);
+                        }
+                    } else if (element.isJsonArray()){
+                        internalValue = convertInstanceOfObject(element.getAsJsonArray());
+                    } else if (element.isJsonObject()) {
+                        internalValue = convertInstanceOfObject(element.getAsJsonObject());
+                    } else {
+                        internalValue = convertInstanceOfObject(element);
+                    }
                 }
             }
             return internalValue;

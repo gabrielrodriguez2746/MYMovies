@@ -21,10 +21,8 @@ import static com.mymovies.helpers.Helpers.getGenericOrDefault;
 
 public class MovieWrapperDeserializer implements JsonDeserializer<MovieWrapper> {
 
-    private static Uri.Builder BASE_POSTER_URI = Uri.parse("http://image.tmdb.org/t/p/w185/")
-            .buildUpon();
-    private static Uri.Builder BASE_BACKDROP_URI = Uri.parse("http://image.tmdb.org/t/p/w780/")
-            .buildUpon();
+    private static Uri BASE_POSTER_URI = Uri.parse("https://image.tmdb.org/t/p/w185/");
+    private static Uri BASE_BACKDROP_URI = Uri.parse("https://image.tmdb.org/t/p/w780/");
 
     @Override
     public MovieWrapper deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -48,12 +46,13 @@ public class MovieWrapperDeserializer implements JsonDeserializer<MovieWrapper> 
             String title = getGenericOrDefault(carObject, "title", "");
             String originalTitle = getGenericOrDefault(carObject, "original_title", "");
 
-            Double voteAverage = getGenericOrDefault(carObject, "vote_average", 0.0);
+            Double voteAverage = getGenericOrDefault(carObject, "vote_average",
+                    new LazilyParsedNumber("0.0")).doubleValue();
 
             String partialPosterPath = getGenericOrDefault(carObject, "poster_path", "");
             String partialBackdropPath = getGenericOrDefault(carObject, "backdrop_path", "");
-            String posterPath = BASE_POSTER_URI.appendPath(partialPosterPath).build().toString();
-            String backdropPath = BASE_BACKDROP_URI.appendPath(partialBackdropPath).build().toString();
+            String posterPath = BASE_POSTER_URI.buildUpon().appendEncodedPath(partialPosterPath).build().toString();
+            String backdropPath = BASE_BACKDROP_URI.buildUpon().appendEncodedPath(partialBackdropPath).build().toString();
 
             String overview = getGenericOrDefault(carObject, "overview", "");
             String releaseDate = getGenericOrDefault(carObject, "release_date", "");

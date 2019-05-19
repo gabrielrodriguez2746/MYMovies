@@ -11,6 +11,8 @@ import androidx.paging.PagedList;
 import com.mymovies.data.models.Movie;
 import com.mymovies.repositories.PopularMoviesRepository;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -56,12 +58,15 @@ public class PopularMoviesViewModel extends ViewModel {
         public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Integer, Movie> callback) {
             compositeDisposable.add(
                     repository.getPopularMoviesByPage(1)
-                            .observeOn(AndroidSchedulers.mainThread()).subscribe((result) ->
-                                    callback.onResult(result, null, result.isEmpty() ? null : 2),
-                            (error) -> {
-                                // TODO Notify
-                            })
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    (result) -> processData(callback, result),
+                                    Throwable::printStackTrace) // TODO Notify
             );
+        }
+
+        private void processData(@NonNull LoadInitialCallback<Integer, Movie> callback, List<Movie> result) {
+            callback.onResult(result, null, result.isEmpty() ? null : 2);
         }
 
         @Override
@@ -72,7 +77,7 @@ public class PopularMoviesViewModel extends ViewModel {
         @Override
         public void loadAfter(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Integer, Movie> callback) {
             compositeDisposable.add(
-                    repository.getPopularMoviesByPage(1)
+                    repository.getPopularMoviesByPage(params.key)
                             .observeOn(AndroidSchedulers.mainThread()).subscribe((result) ->
                                     callback.onResult(result, result.isEmpty() ? null : params.key + 1),
                             (error) -> {

@@ -1,5 +1,6 @@
 package com.mymovies.models;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +19,16 @@ public class RecyclerViewConfiguration {
         isNestedScroll = false;
         hasFixedSize = true;
         decorator = null;
+    }
+
+    public RecyclerViewConfiguration(RecyclerView.LayoutManager layoutManager,
+                                     RecyclerView.Adapter<?> adapter,
+                                     @NonNull RecyclerView.ItemDecoration decorator) {
+        this.layoutManager = layoutManager;
+        this.adapter = adapter;
+        this.decorator = decorator;
+        isNestedScroll = false;
+        hasFixedSize = true;
     }
 
     public RecyclerView.LayoutManager getLayoutManager() {
