@@ -1,8 +1,7 @@
-package com.mymovies.di.modules.main.popular;
+package com.mymovies.di.modules.main.detail;
 
 import com.mymovies.di.scopes.FragmentScope;
 import com.mymovies.fragments.DetailMovieFragment;
-import com.mymovies.fragments.PopularMoviesListFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

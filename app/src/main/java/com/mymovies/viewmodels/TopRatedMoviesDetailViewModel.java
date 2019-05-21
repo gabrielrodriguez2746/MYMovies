@@ -6,21 +6,21 @@ import androidx.lifecycle.ViewModel;
 
 import com.mymovies.data.models.Movie;
 import com.mymovies.repositories.BasePopularMoviesRepository;
-import com.mymovies.repositories.PopularMoviesRepository;
+import com.mymovies.repositories.BaseTopRatedMoviesRepository;
 
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class PopularMoviesDetailViewModel extends DetailMoviesViewModel {
+public class TopRatedMoviesDetailViewModel extends DetailMoviesViewModel {
 
-    private BasePopularMoviesRepository repository;
+    private BaseTopRatedMoviesRepository repository;
     private CompositeDisposable compositeDisposable;
     private MutableLiveData<Movie> movieLiveData;
 
     @Inject
-    public PopularMoviesDetailViewModel(BasePopularMoviesRepository repository) {
+    public TopRatedMoviesDetailViewModel(BaseTopRatedMoviesRepository repository) {
         this.repository = repository;
         compositeDisposable = new CompositeDisposable();
         movieLiveData = new MutableLiveData<>();
