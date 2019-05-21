@@ -2,12 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@+id/destination_home">
+    app:startDestination="@+id/destination_popular">
 
     <fragment
-        android:id="@+id/destination_home"
+        android:id="@+id/destination_popular"
         android:name="com.mymovies.fragments.PopularMoviesListFragment"
-        android:label="@string/app_home">
+        android:label="@string/app_popular">
 
         <action
             android:id="@+id/action_detail"
@@ -26,5 +26,15 @@
             android:name="detail_type"
             android:defaultValue="0"
             app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/destination_top_rated"
+        android:name="com.mymovies.fragments.TopRatedMoviesListFragment"
+        android:label="@string/app_top_rated">
+
+        <action
+            android:id="@+id/action_detail"
+            app:destination="@id/destination_detail" />
     </fragment>
 </navigation>

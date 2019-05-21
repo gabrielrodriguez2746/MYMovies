@@ -6,4 +6,6 @@
     <string name="app_overview">Overview:</string>
     <string name="app_release_date">Release Date:</string>
     <string name="app_user_rating">User Rating:</string>
+    <string name="app_top_rated">Top rated movies</string>
+    <string name="app_popular">Popular movies</string>
 </resources>

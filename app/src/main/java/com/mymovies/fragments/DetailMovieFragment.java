@@ -17,7 +17,9 @@ import androidx.lifecycle.ViewModelProviders;
 import com.mymovies.R;
 import com.mymovies.data.models.Movie;
 import com.mymovies.databinding.FragmentMovieDetailBinding;
+import com.mymovies.viewmodels.DetailMoviesViewModel;
 import com.mymovies.viewmodels.PopularMoviesDetailViewModel;
+import com.mymovies.viewmodels.TopRatedMoviesDetailViewModel;
 
 import java.util.Objects;
 
@@ -31,7 +33,7 @@ public class DetailMovieFragment extends Fragment {
     public static String MOVIE_DETAIL_TYPE = "detail_type";
 
     private FragmentMovieDetailBinding binding;
-    private PopularMoviesDetailViewModel viewModel;
+    private DetailMoviesViewModel viewModel;
 
     @Inject
     ViewModelProvider.Factory factory;
@@ -55,8 +57,13 @@ public class DetailMovieFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Bundle arguments = Objects.requireNonNull(getArguments());
         if (viewModel == null) {
-            viewModel = ViewModelProviders.of(this, factory).get(PopularMoviesDetailViewModel.class);
+            if (arguments.getInt(MOVIE_DETAIL_TYPE, 0) == 0) {
+                viewModel = ViewModelProviders.of(this, factory).get(PopularMoviesDetailViewModel.class);
+            } else {
+                viewModel = ViewModelProviders.of(this, factory).get(TopRatedMoviesDetailViewModel.class);
+            }
         }
         viewModel.getMovieLiveData().observe(getViewLifecycleOwner(), movie -> {
             if (movie != null) {
@@ -69,9 +76,8 @@ public class DetailMovieFragment extends Fragment {
                 adjustToolbarTitle(movie);
             }
         });
-        Bundle arguments = Objects.requireNonNull(getArguments());
         if (arguments.containsKey(MOVIE_ID_KEY)) {
-            viewModel.getMoviewFromId(arguments.getInt(MOVIE_ID_KEY));
+            viewModel.getMovieFromId(arguments.getInt(MOVIE_ID_KEY));
         }
     }
 
