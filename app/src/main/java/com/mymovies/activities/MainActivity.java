@@ -11,6 +11,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.mymovies.R;
+import com.mymovies.fragments.DetailMovieFragment;
+import com.mymovies.fragments.PopularMoviesListFragment;
+import com.mymovies.listeners.OnFragmentInteraction;
 
 import javax.inject.Inject;
 
@@ -19,7 +22,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
-public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector {
+public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector, OnFragmentInteraction {
 
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
@@ -43,5 +46,15 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return dispatchingAndroidInjector;
+    }
+
+    @Override
+    public void onItemClicked(String fragment, String id) {
+        Bundle data = new Bundle();
+        if (fragment.equals(PopularMoviesListFragment.POPULAR_FRAGMENT)) {
+            data.putInt(DetailMovieFragment.MOVIE_ID_KEY, Integer.valueOf(id));
+            data.putInt(DetailMovieFragment.MOVIE_DETAIL_TYPE, 0);
+            navController.navigate(R.id.action_detail, data);
+        }
     }
 }

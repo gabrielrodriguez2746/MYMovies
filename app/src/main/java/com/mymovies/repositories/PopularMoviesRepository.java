@@ -6,8 +6,10 @@ import com.mymovies.data.models.Movie;
 import com.mymovies.data.models.MovieWrapper;
 import com.mymovies.rest.MoviesService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -34,6 +36,33 @@ public class PopularMoviesRepository implements BasePopularMoviesRepository {
                 .toSingle()
                 .flatMap((value) -> validateEmptyPersistence(page, value))
                 .onErrorResumeNext((error) -> getDataFromServer(page));
+    }
+
+    @Override
+    public Single<Movie> getSingleMovieFromId(int movieId) {
+        return getAllMoviesSingle()
+                .subscribeOn(Schedulers.computation())
+                .map(movies -> {
+                    Movie searchedMovie = null;
+                    for (Movie movie : movies) {
+                        if (movie.getId() == movieId) {
+                            searchedMovie = movie;
+                            break;
+                        }
+                    }
+                    return searchedMovie;
+                });
+//                .onErrorResumeNext(); TODO Need to add also page information for this in save instance case
+    }
+
+    private Single<List<Movie>> getAllMoviesSingle() {
+        return Single.fromCallable(() -> {
+            ArrayList<Movie> movies = new ArrayList<>();
+            for (Map.Entry<Integer, List<Movie>> entrySet : moviesCache.entrySet()) {
+                movies.addAll(entrySet.getValue());
+            }
+            return movies;
+        });
     }
 
     private Single<List<Movie>> getDataFromServer(int page) {

@@ -21,12 +21,14 @@ public class MYMoviesAdapter extends PagedListAdapter<Movie, MYMoviesAdapter.MYM
 
     // TODO This should be provided as a factory
     private ViewGroup.LayoutParams defaultLayoutParameters;
+    private MYMoviesAdapter.OnMovieClicked listener;
 
     private static MyMoviesDiffResolver diffResolver = new MyMoviesDiffResolver();
 
 
-    public MYMoviesAdapter(DisplayMetrics displayMetrics) {
+    public MYMoviesAdapter(DisplayMetrics displayMetrics, MYMoviesAdapter.OnMovieClicked listener) {
         super(diffResolver);
+        this.listener = listener;
         defaultLayoutParameters = new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 (int) (displayMetrics.heightPixels * 0.43)
@@ -61,6 +63,7 @@ public class MYMoviesAdapter extends PagedListAdapter<Movie, MYMoviesAdapter.MYM
         void bind(Movie data) {
             binding.setImageUrl(data.getPosterPath());
             binding.setTitle(data.getTitle());
+            binding.getRoot().setOnClickListener(v -> listener.onMovieClicked(data.getId()));
         }
     }
 
@@ -80,4 +83,8 @@ public class MYMoviesAdapter extends PagedListAdapter<Movie, MYMoviesAdapter.MYM
         }
     }
 
+    public interface OnMovieClicked {
+
+        void onMovieClicked(int movieId);
+    }
 }

@@ -9,7 +9,7 @@ import androidx.paging.PageKeyedDataSource;
 import androidx.paging.PagedList;
 
 import com.mymovies.data.models.Movie;
-import com.mymovies.repositories.PopularMoviesRepository;
+import com.mymovies.repositories.BasePopularMoviesRepository;
 
 import java.util.List;
 
@@ -20,13 +20,13 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class PopularMoviesViewModel extends ViewModel {
 
-    private PopularMoviesRepository repository;
+    private BasePopularMoviesRepository repository;
     private CompositeDisposable compositeDisposable;
     private MoviesFactory dataFactory;
     private LiveData<PagedList<Movie>> itemsLiveData;
 
     @Inject
-    public PopularMoviesViewModel(PopularMoviesRepository repository) {
+    public PopularMoviesViewModel(BasePopularMoviesRepository repository) {
         this.repository = repository;
         compositeDisposable = new CompositeDisposable();
         dataFactory = new MoviesFactory(new DataController()); // TODO This should be also injected

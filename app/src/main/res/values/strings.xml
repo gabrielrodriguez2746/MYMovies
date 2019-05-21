@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">MYMovies</string>
     <string name="app_home">My Movies</string>
+    <string name="app_poster_image">Poster Image</string>
+    <string name="app_original_title">Original Title:</string>
+    <string name="app_overview">Overview:</string>
+    <string name="app_release_date">Release Date:</string>
+    <string name="app_user_rating">User Rating:</string>
 </resources>
