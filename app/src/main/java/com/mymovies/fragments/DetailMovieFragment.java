@@ -2,6 +2,7 @@ package com.mymovies.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,16 @@ public class DetailMovieFragment extends Fragment {
                 viewModel = ViewModelProviders.of(this, factory).get(TopRatedMoviesDetailViewModel.class);
             }
         }
+        processMovie();
+        processTrailers();
+        processReviews();
+
+        if (arguments.containsKey(MOVIE_ID_KEY)) {
+            viewModel.getMovieFromId(arguments.getInt(MOVIE_ID_KEY));
+        }
+    }
+
+    private void processMovie() {
         viewModel.getMovieLiveData().observe(getViewLifecycleOwner(), movie -> {
             if (movie != null) {
                 // TODO Remove movie information mapping form here
@@ -76,9 +87,24 @@ public class DetailMovieFragment extends Fragment {
                 adjustToolbarTitle(movie);
             }
         });
-        if (arguments.containsKey(MOVIE_ID_KEY)) {
-            viewModel.getMovieFromId(arguments.getInt(MOVIE_ID_KEY));
-        }
+    }
+
+    private void processTrailers() {
+        // TODO Process trailers
+        viewModel.getTrailersLiveData().observe(getViewLifecycleOwner(), trailers -> {
+            if (trailers != null) {
+                Log.d("Responses", "Trailers:: " + trailers.toString());
+            }
+        });
+    }
+
+    private void processReviews() {
+        // TODO Process reviews
+        viewModel.getReviewsLiveData().observe(getViewLifecycleOwner(), reviews -> {
+            if (reviews != null) {
+                Log.d("Responses", "Reviews:: " + reviews.toString());
+            }
+        });
     }
 
     private void adjustToolbarTitle(Movie movie) {

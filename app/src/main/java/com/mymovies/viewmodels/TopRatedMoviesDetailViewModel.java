@@ -1,11 +1,6 @@
 package com.mymovies.viewmodels;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-
-import com.mymovies.data.models.Movie;
-import com.mymovies.repositories.BasePopularMoviesRepository;
+import com.mymovies.repositories.BaseExtraMoviesInfoRepository;
 import com.mymovies.repositories.BaseTopRatedMoviesRepository;
 
 import javax.inject.Inject;
@@ -17,13 +12,13 @@ public class TopRatedMoviesDetailViewModel extends DetailMoviesViewModel {
 
     private BaseTopRatedMoviesRepository repository;
     private CompositeDisposable compositeDisposable;
-    private MutableLiveData<Movie> movieLiveData;
 
     @Inject
-    public TopRatedMoviesDetailViewModel(BaseTopRatedMoviesRepository repository) {
+    public TopRatedMoviesDetailViewModel(BaseTopRatedMoviesRepository repository,
+                                         BaseExtraMoviesInfoRepository infoRepository) {
+        super(infoRepository);
         this.repository = repository;
         compositeDisposable = new CompositeDisposable();
-        movieLiveData = new MutableLiveData<>();
     }
 
     @Override
@@ -41,10 +36,5 @@ public class TopRatedMoviesDetailViewModel extends DetailMoviesViewModel {
                                 (result) -> movieLiveData.postValue(result), // TODO This should be mapped here
                                 Throwable::printStackTrace) // TODO Notify
         );
-    }
-
-    @Override
-    public LiveData<Movie> getMovieLiveData() {
-        return movieLiveData;
     }
 }
