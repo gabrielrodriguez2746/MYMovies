@@ -8,4 +8,7 @@
     <string name="app_user_rating">User Rating:</string>
     <string name="app_top_rated">Top rated movies</string>
     <string name="app_popular">Popular movies</string>
+    <string name="app_reviews">Reviews</string>
+    <string name="app_trailers">Trailers</string>
+    <string name="app_general_information">General Information</string>
 </resources>

@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!--   TODO Add header transition     -->
         <ImageView
             android:id="@+id/ivPoster"
             android:layout_width="0dp"
@@ -22,7 +23,9 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ivPoster">
@@ -33,13 +36,27 @@
                 android:padding="@dimen/space_small">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_info_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/space_micro"
+                    android:paddingBottom="@dimen/space_micro"
+                    android:text="@string/app_general_information"
+                    android:textSize="@dimen/font_large"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/tv_title"
+                    app:layout_constraintStart_toStartOf="@id/tv_release_date_label"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_title_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_small"
                     android:text="@string/app_original_title"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_info_title" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_overview_label"
@@ -115,6 +132,53 @@
                     app:layout_constraintTop_toTopOf="@id/tv_overview_label"
                     tools:text="After to many things" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_trailers_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_small"
+                    android:paddingTop="@dimen/space_micro"
+                    android:paddingBottom="@dimen/space_micro"
+                    android:text="@string/app_trailers"
+                    android:textSize="@dimen/font_large"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/tv_title"
+                    app:layout_constraintStart_toStartOf="@id/tv_release_date_label"
+                    app:layout_constraintTop_toBottomOf="@id/tv_release_date" />
+
+                <LinearLayout
+                    android:id="@+id/ll_trailers"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="@id/tv_title"
+                    app:layout_constraintStart_toStartOf="@id/tv_release_date_label"
+                    app:layout_constraintTop_toBottomOf="@id/tv_trailers_title"
+                    app:trailers="@{ trailers }" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_reviews_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/space_micro"
+                    android:paddingBottom="@dimen/space_micro"
+                    android:text="@string/app_reviews"
+                    android:textSize="@dimen/font_large"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/tv_title"
+                    app:layout_constraintStart_toStartOf="@id/tv_release_date_label"
+                    app:layout_constraintTop_toBottomOf="@id/ll_trailers" />
+
+                <LinearLayout
+                    android:id="@+id/ll_reviews"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="@id/tv_title"
+                    app:layout_constraintStart_toStartOf="@id/tv_release_date_label"
+                    app:layout_constraintTop_toBottomOf="@id/tv_reviews_title"
+                    app:reviews="@{ reviews }" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -145,6 +209,14 @@
         <variable
             name="releaseDate"
             type="String" />
+
+        <variable
+            name="trailers"
+            type="com.mymovies.widget.TrailersWidget" />
+
+        <variable
+            name="reviews"
+            type="com.mymovies.widget.ReviewsWidget" />
 
     </data>
 </layout>
