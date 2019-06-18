@@ -54,9 +54,10 @@ public class PopularMoviesListFragment extends Fragment implements MYMoviesAdapt
         if (binding == null) {
             DisplayMetrics displayMetrics = getDisplayMetrics();
             adapter = new MYMoviesAdapter(displayMetrics, this);
+            int rowsNumber = Objects.requireNonNull(getContext()).getResources().getInteger(R.integer.app_adapter_rows);
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies_list, container, false);
             binding.setRecyclerConfiguration(new RecyclerViewConfiguration(
-                    new GridLayoutManager(getContext(), 2), adapter,
+                    new GridLayoutManager(getContext(), rowsNumber), adapter,
                     new MediaSpaceDecorator((getResources().getDimensionPixelSize(R.dimen.space_small)))));
         }
         return binding != null ? binding.getRoot() : super.onCreateView(inflater, container, savedInstanceState);

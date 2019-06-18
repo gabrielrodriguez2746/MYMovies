@@ -5,6 +5,7 @@ import com.mymovies.di.modules.app.AppActivityBuilder;
 import com.mymovies.di.modules.app.AppConfigurationModule;
 import com.mymovies.di.modules.app.AppModule;
 import com.mymovies.di.modules.app.FactoryModule;
+import com.mymovies.di.modules.main.repositories.MoviesRepositoryModule;
 import com.mymovies.di.modules.network.ApiModule;
 import com.mymovies.di.modules.network.AppNetworkModule;
 
@@ -18,12 +19,13 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Singleton
 @Component(modules = {
         AndroidSupportInjectionModule.class,
+        ApiModule.class,
         AppActivityBuilder.class,
         AppConfigurationModule.class,
         AppModule.class,
-        ApiModule.class,
         AppNetworkModule.class,
-        FactoryModule.class
+        FactoryModule.class,
+        MoviesRepositoryModule.class
 })
 public interface MainComponent extends AndroidInjector<MoviesApplication> {
 
