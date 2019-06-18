@@ -9,4 +9,6 @@
 
     <dimen name="card_elevation">5dp</dimen>
 
+    <dimen name="font_large">24sp</dimen>
+
 </resources>

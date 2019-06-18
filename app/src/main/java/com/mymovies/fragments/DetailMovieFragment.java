@@ -21,6 +21,8 @@ import com.mymovies.databinding.FragmentMovieDetailBinding;
 import com.mymovies.viewmodels.DetailMoviesViewModel;
 import com.mymovies.viewmodels.PopularMoviesDetailViewModel;
 import com.mymovies.viewmodels.TopRatedMoviesDetailViewModel;
+import com.mymovies.widget.ReviewsWidget;
+import com.mymovies.widget.TrailersWidget;
 
 import java.util.Objects;
 
@@ -90,19 +92,19 @@ public class DetailMovieFragment extends Fragment {
     }
 
     private void processTrailers() {
-        // TODO Process trailers
         viewModel.getTrailersLiveData().observe(getViewLifecycleOwner(), trailers -> {
             if (trailers != null) {
-                Log.d("Responses", "Trailers:: " + trailers.toString());
+                binding.setTrailers(new TrailersWidget(trailers,
+                        id -> Log.d("Item Clicked", "Trailer:: " + id)));
+
             }
         });
     }
 
     private void processReviews() {
-        // TODO Process reviews
         viewModel.getReviewsLiveData().observe(getViewLifecycleOwner(), reviews -> {
             if (reviews != null) {
-                Log.d("Responses", "Reviews:: " + reviews.toString());
+                binding.setReviews(new ReviewsWidget(reviews));
             }
         });
     }

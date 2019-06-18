@@ -11,6 +11,14 @@ public class Review {
 
     private String content;
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
     @Override
     public String toString() {
         return "Review{" +
