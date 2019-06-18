@@ -5,6 +5,7 @@ import com.mymovies.repositories.BaseTopRatedMoviesRepository;
 
 import javax.inject.Inject;
 
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -30,11 +31,20 @@ public class TopRatedMoviesDetailViewModel extends DetailMoviesViewModel {
     @Override
     public void getMovieFromId(int movieId) {
         compositeDisposable.add(
-                repository.getSingleMovieFromId(movieId)
+                getAllMovieDataZip(movieId)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
-                                (result) -> movieLiveData.postValue(result), // TODO This should be mapped here
+                                movie -> {
+                                }, // TODO Improve this
                                 Throwable::printStackTrace) // TODO Notify
         );
+    }
+
+    private Single<Boolean> getAllMovieDataZip(int movieId) {
+        return Single.zip(repository.getSingleMovieFromId(movieId)
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .doOnSuccess((result) -> movieLiveData.postValue(result)),
+                getReviewsSingle(movieId),
+                getTrailersSingle(movieId), (movie, reviews, trailers) -> true);
     }
 }

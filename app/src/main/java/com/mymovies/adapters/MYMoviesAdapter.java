@@ -29,10 +29,8 @@ public class MYMoviesAdapter extends PagedListAdapter<Movie, MYMoviesAdapter.MYM
     public MYMoviesAdapter(DisplayMetrics displayMetrics, MYMoviesAdapter.OnMovieClicked listener) {
         super(diffResolver);
         this.listener = listener;
-        defaultLayoutParameters = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                (int) (displayMetrics.heightPixels * 0.43)
-        );
+        int height = (int) (Math.max(displayMetrics.heightPixels, displayMetrics.widthPixels) * 0.43);
+        defaultLayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
     }
 
     @NonNull

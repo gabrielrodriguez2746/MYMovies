@@ -15,11 +15,19 @@
             android:layout_height="0dp"
             android:contentDescription="@string/app_poster_image"
             android:scaleType="fitXY"
-            app:image_url="@{ backdropImage }"
-            app:layout_constraintDimensionRatio="2:1.15"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:image_url="@{ posterImage }"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/gl_reference"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@color/colorPrimary" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_reference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.35" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"
@@ -27,8 +35,8 @@
             android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivPoster">
+            app:layout_constraintStart_toEndOf="@id/gl_reference"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -192,10 +200,6 @@
 
         <variable
             name="backdropImage"
-            type="String" />
-
-        <variable
-            name="posterImage"
             type="String" />
 
         <variable

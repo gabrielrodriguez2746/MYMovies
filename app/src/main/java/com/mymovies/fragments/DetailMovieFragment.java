@@ -86,6 +86,7 @@ public class DetailMovieFragment extends Fragment {
                 binding.setReleaseDate(movie.getReleaseDate());
                 binding.setRating(String.valueOf(movie.getPopularity()));
                 binding.setBackdropImage(movie.getBackdropPath());
+                binding.setPosterImage(movie.getPosterPath());
                 adjustToolbarTitle(movie);
             }
         });
