@@ -34,7 +34,7 @@ public class TrailerWrapperDeserializer implements JsonDeserializer<TrailerWrapp
 
     @Nullable
     private static Trailer mapTrailerFromElement(JsonObject reviewObject) {
-        String id = getGenericOrDefault(reviewObject, "id", "");
+        String id = getGenericOrDefault(reviewObject, "key", "");
         if (id.isEmpty()) {
             return null;
         } else {
