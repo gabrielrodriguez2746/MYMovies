@@ -1,16 +1,20 @@
 package com.mymovies.bindings;
 
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mymovies.R;
 import com.mymovies.data.models.Review;
 import com.mymovies.data.models.Trailer;
+import com.mymovies.databinding.ItemReviewsBinding;
+import com.mymovies.databinding.ItemTrailerBinding;
 import com.mymovies.models.RecyclerViewConfiguration;
 import com.mymovies.widget.ReviewsWidget;
 import com.mymovies.widget.TrailersWidget;
@@ -35,13 +39,13 @@ public class GeneralBindings {
     public static void setTrailers(ViewGroup parent, TrailersWidget widget) {
         if (widget != null && !widget.getTrailers().isEmpty()) {
             parent.setVisibility(View.VISIBLE);
-            LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
             for (Trailer trailer : widget.getTrailers()) {
-                TextView textView = new TextView(parent.getContext());
-                textView.setLayoutParams(params);
-                textView.setText(trailer.getName());
-                textView.setOnClickListener(v -> widget.getListener().onItemClicked(trailer.getId()));
-                parent.addView(textView);
+                ItemTrailerBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.item_trailer, parent, false);
+                binding.setTitle(trailer.getName());
+                View rootView = binding.getRoot();
+                rootView.setOnClickListener(v -> widget.getListener().onItemClicked(trailer.getId()));
+                parent.addView(rootView);
             }
         } else {
             parent.setVisibility(View.GONE);
@@ -53,12 +57,13 @@ public class GeneralBindings {
     public static void setReviews(ViewGroup parent, ReviewsWidget widget) {
         if (widget != null && !widget.getReviews().isEmpty()) {
             parent.setVisibility(View.VISIBLE);
-            LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+            Context context = parent.getContext();
+            LayoutInflater layoutInflater = LayoutInflater.from(context);
             for (Review review : widget.getReviews()) {
-                TextView textView = new TextView(parent.getContext());
-                textView.setLayoutParams(params);
-                textView.setText(review.getContent());
-                parent.addView(textView);
+                ItemReviewsBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.item_reviews, parent, false);
+                binding.setAuthor(context.getString(R.string.app_author, review.getAuthor()));
+                binding.setContent(review.getContent());
+                parent.addView(binding.getRoot());
             }
         } else {
             parent.setVisibility(View.GONE);
