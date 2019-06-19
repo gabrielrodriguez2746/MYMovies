@@ -2,7 +2,6 @@ package com.mymovies.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +28,8 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 import dagger.android.support.AndroidSupportInjection;
+
+import static com.mymovies.helpers.Helpers.watchYoutubeVideo;
 
 public class DetailMovieFragment extends Fragment {
 
@@ -95,8 +96,7 @@ public class DetailMovieFragment extends Fragment {
     private void processTrailers() {
         viewModel.getTrailersLiveData().observe(getViewLifecycleOwner(), trailers -> {
             if (trailers != null) {
-                binding.setTrailers(new TrailersWidget(trailers,
-                        id -> Log.d("Item Clicked", "Trailer:: " + id)));
+                binding.setTrailers(new TrailersWidget(trailers, id -> watchYoutubeVideo(Objects.requireNonNull(getContext()), id)));
 
             }
         });
