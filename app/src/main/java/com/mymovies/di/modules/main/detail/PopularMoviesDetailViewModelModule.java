@@ -3,6 +3,7 @@ package com.mymovies.di.modules.main.detail;
 import androidx.lifecycle.ViewModel;
 
 import com.mymovies.di.keys.ViewModelKey;
+import com.mymovies.viewmodels.FavoritesMoviesDetailViewModel;
 import com.mymovies.viewmodels.PopularMoviesDetailViewModel;
 import com.mymovies.viewmodels.TopRatedMoviesDetailViewModel;
 
@@ -22,4 +23,9 @@ public abstract class PopularMoviesDetailViewModelModule {
     @IntoMap
     @ViewModelKey(TopRatedMoviesDetailViewModel.class)
     public abstract ViewModel bindTopRatedMoviesDetailViewModel(TopRatedMoviesDetailViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavoritesMoviesDetailViewModel.class)
+    public abstract ViewModel bindFavoritesMoviesDetailViewModel(FavoritesMoviesDetailViewModel viewModel);
 }

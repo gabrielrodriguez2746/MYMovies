@@ -3,6 +3,7 @@ package com.mymovies.di.component;
 import com.mymovies.MoviesApplication;
 import com.mymovies.di.modules.app.AppActivityBuilder;
 import com.mymovies.di.modules.app.AppConfigurationModule;
+import com.mymovies.di.modules.app.AppDataBaseModule;
 import com.mymovies.di.modules.app.AppModule;
 import com.mymovies.di.modules.app.FactoryModule;
 import com.mymovies.di.modules.main.repositories.MoviesRepositoryModule;
@@ -22,6 +23,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
         ApiModule.class,
         AppActivityBuilder.class,
         AppConfigurationModule.class,
+        AppDataBaseModule.class,
         AppModule.class,
         AppNetworkModule.class,
         FactoryModule.class,
