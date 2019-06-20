@@ -37,4 +37,14 @@
             android:id="@+id/action_detail"
             app:destination="@id/destination_detail" />
     </fragment>
+
+    <fragment
+        android:id="@+id/destination_favorites"
+        android:name="com.mymovies.fragments.FavoritesMoviesListFragment"
+        android:label="@string/app_favorites">
+
+        <action
+            android:id="@+id/action_detail"
+            app:destination="@id/destination_detail" />
+    </fragment>
 </navigation>

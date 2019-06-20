@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 import java.util.Objects;
 
-@Entity
+@Entity(tableName = "movie")
 public class Movie {
 
     @PrimaryKey

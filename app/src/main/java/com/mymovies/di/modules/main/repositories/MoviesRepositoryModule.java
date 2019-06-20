@@ -1,7 +1,9 @@
 package com.mymovies.di.modules.main.repositories;
 
+import com.mymovies.repositories.BaseFavoritesMoviesRepository;
 import com.mymovies.repositories.BasePopularMoviesRepository;
 import com.mymovies.repositories.BaseTopRatedMoviesRepository;
+import com.mymovies.repositories.FavoritesMoviesRepository;
 import com.mymovies.repositories.PopularMoviesRepository;
 import com.mymovies.repositories.TopRatedMoviesRepository;
 
@@ -20,5 +22,9 @@ public abstract class MoviesRepositoryModule {
     @Binds
     @Singleton
     public abstract BaseTopRatedMoviesRepository bindTopRatedMoviesRepository(TopRatedMoviesRepository repository);
+
+    @Binds
+    @Singleton
+    public abstract BaseFavoritesMoviesRepository bindFavoritesMoviesRepository(FavoritesMoviesRepository repository);
 
 }

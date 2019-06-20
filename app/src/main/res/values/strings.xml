@@ -7,9 +7,11 @@
     <string name="app_release_date">Release Date:</string>
     <string name="app_user_rating">User Rating:</string>
     <string name="app_top_rated">Top rated movies</string>
+    <string name="app_favorites">Favorites</string>
     <string name="app_popular">Popular movies</string>
     <string name="app_reviews">Reviews</string>
     <string name="app_trailers">Trailers</string>
     <string name="app_general_information">General Information</string>
     <string name="app_author">Author: %1$s</string>
+    <string name="app_favorite_toggle">Favorite toggle</string>
 </resources>

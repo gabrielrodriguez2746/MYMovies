@@ -22,6 +22,17 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@color/colorPrimary" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_favorite_toggle"
+            android:foreground="?android:attr/selectableItemBackgroundBorderless"
+            android:padding="@dimen/space_small"
+            android:src="@{ favoriteDrawable }"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_reference"
             android:layout_width="wrap_content"
@@ -225,6 +236,10 @@
         <variable
             name="reviews"
             type="com.mymovies.widget.ReviewsWidget" />
+
+        <variable
+            name="favoriteDrawable"
+            type="android.graphics.drawable.Drawable" />
 
     </data>
 </layout>

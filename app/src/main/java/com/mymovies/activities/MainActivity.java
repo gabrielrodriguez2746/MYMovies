@@ -14,6 +14,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.mymovies.R;
 import com.mymovies.fragments.DetailMovieFragment;
+import com.mymovies.fragments.FavoritesMoviesListFragment;
 import com.mymovies.fragments.PopularMoviesListFragment;
 import com.mymovies.fragments.TopRatedMoviesListFragment;
 import com.mymovies.listeners.OnFragmentInteraction;
@@ -70,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
             data.putInt(DetailMovieFragment.MOVIE_DETAIL_TYPE, 0);
         } else if (fragment.equals(TopRatedMoviesListFragment.TOP_RATED_FRAGMENT)) {
             data.putInt(DetailMovieFragment.MOVIE_DETAIL_TYPE, 1);
+        } else if (fragment.equals(FavoritesMoviesListFragment.FAVORITES_FRAGMENT)) {
+            data.putInt(DetailMovieFragment.MOVIE_DETAIL_TYPE, 2);
         }
         navController.navigate(R.id.action_detail, data);
     }
