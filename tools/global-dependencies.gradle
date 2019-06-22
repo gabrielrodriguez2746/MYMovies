@@ -30,7 +30,7 @@ ext {
     pagingVersion = "2.1.0"
     navigationVersion = "1.0.0"
     recyclerViewVersion = "1.0.0"
-    roomVersion = '2.1.0-beta01'
+    roomVersion = '2.1.0'
 
     // Picasso
     picassoVersion ="2.71828"
