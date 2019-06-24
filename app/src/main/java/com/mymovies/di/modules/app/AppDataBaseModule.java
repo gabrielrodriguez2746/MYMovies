@@ -22,7 +22,7 @@ public class AppDataBaseModule {
                 .fallbackToDestructiveMigration().build();
     }
 
-    // TODO Improve also this, should not be singleton
+    // Gabriel Improve also this, should not be singleton
     @Provides
     @Singleton
     public FavoritesMoviesDao provideFavoritesMoviesDao(MoviesDatabase database) {

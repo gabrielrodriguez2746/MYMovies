@@ -52,7 +52,7 @@ public class PopularMoviesRepository implements BasePopularMoviesRepository {
                     }
                     return searchedMovie;
                 });
-//                .onErrorResumeNext(); TODO Need to add also page information for this in save instance case
+//                .onErrorResumeNext(); Gabriel Need to add also page information for this in save instance case
     }
 
     private Single<List<Movie>> getAllMoviesSingle() {

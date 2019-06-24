@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--   TODO Add header transition     -->
+        <!--   Gabriel Add header transition     -->
         <ImageView
             android:id="@+id/ivPoster"
             android:layout_width="0dp"
@@ -197,7 +197,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!--    TODO Add previews-->
+    <!--    Gabriel Add previews-->
 
     <data>
 
