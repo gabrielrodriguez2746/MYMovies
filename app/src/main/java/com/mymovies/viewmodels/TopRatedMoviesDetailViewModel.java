@@ -26,8 +26,8 @@ public class TopRatedMoviesDetailViewModel extends DetailMoviesViewModel {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 movie -> {
-                                }, // TODO Improve this
-                                Throwable::printStackTrace) // TODO Notify
+                                }, // Gabriel Improve this
+                                Throwable::printStackTrace) // Gabriel Notify
         );
     }
 

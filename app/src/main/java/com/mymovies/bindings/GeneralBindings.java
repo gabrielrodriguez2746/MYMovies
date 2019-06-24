@@ -34,7 +34,7 @@ public class GeneralBindings {
         }
     }
 
-    // TODO Adjust later this, is taking to much responsibility
+    // Gabriel Adjust later this, is taking to much responsibility
     @BindingAdapter("trailers")
     public static void setTrailers(ViewGroup parent, TrailersWidget widget) {
         if (widget != null && !widget.getTrailers().isEmpty()) {
@@ -52,7 +52,7 @@ public class GeneralBindings {
         }
     }
 
-    // TODO Adjust later this, is taking to much responsibility
+    // Gabriel Adjust later this, is taking to much responsibility
     @BindingAdapter("reviews")
     public static void setReviews(ViewGroup parent, ReviewsWidget widget) {
         if (widget != null && !widget.getReviews().isEmpty()) {

@@ -22,7 +22,7 @@ import java.util.Objects;
 
 public class FavoritesMoviesAdapter extends ListAdapter<Movie, FavoritesMoviesAdapter.MYMoviesViewHolder> {
 
-    // TODO This should be provided as a factory
+    // Gabriel This should be provided as a factory
     private ViewGroup.LayoutParams defaultLayoutParameters;
     private OnMovieClicked listener;
 

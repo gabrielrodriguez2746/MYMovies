@@ -29,7 +29,7 @@ public class TopRatedMoviesViewModel extends ViewModel {
     public TopRatedMoviesViewModel(BaseTopRatedMoviesRepository repository) {
         this.repository = repository;
         compositeDisposable = new CompositeDisposable();
-        dataFactory = new MoviesFactory(new DataController()); // TODO This should be also injected
+        dataFactory = new MoviesFactory(new DataController()); // Gabriel This should be also injected
     }
 
     @Override
@@ -51,7 +51,7 @@ public class TopRatedMoviesViewModel extends ViewModel {
     }
 
 
-    // TODO This should not be inner
+    // Gabriel This should not be inner
     class DataController extends PageKeyedDataSource<Integer, Movie> {
 
         @Override
@@ -61,7 +61,7 @@ public class TopRatedMoviesViewModel extends ViewModel {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
                                     (result) -> processData(callback, result),
-                                    Throwable::printStackTrace) // TODO Notify
+                                    Throwable::printStackTrace) // Gabriel Notify
             );
         }
 
@@ -71,7 +71,7 @@ public class TopRatedMoviesViewModel extends ViewModel {
 
         @Override
         public void loadBefore(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Integer, Movie> callback) {
-            // TODO Notify to show loading
+            // Gabriel Notify to show loading
         }
 
         @Override
@@ -81,7 +81,7 @@ public class TopRatedMoviesViewModel extends ViewModel {
                             .observeOn(AndroidSchedulers.mainThread()).subscribe((result) ->
                                     callback.onResult(result, result.isEmpty() ? null : params.key + 1),
                             (error) -> {
-                                // TODO Notify
+                                // Gabriel Notify
                             })
             );
         }

@@ -97,7 +97,7 @@ public class DetailMovieFragment extends Fragment {
     private void processMovie() {
         viewModel.getMovieLiveData().observe(getViewLifecycleOwner(), movie -> {
             if (movie != null) {
-                // TODO Remove movie information mapping form here
+                // Gabriel Remove movie information mapping form here
                 binding.setOverview(movie.getOverview());
                 binding.setTitle(movie.getOriginalTitle());
                 binding.setReleaseDate(movie.getReleaseDate());
@@ -114,7 +114,7 @@ public class DetailMovieFragment extends Fragment {
         viewModel.getTrailersLiveData().observe(getViewLifecycleOwner(), trailers -> {
             if (trailers != null) {
                 binding.setTrailers(new TrailersWidget(trailers, id ->
-                        // TODO This should be made by activity
+                        // Gabriel This should be made by activity
                         watchYoutubeVideo(Objects.requireNonNull(getContext()), id)));
 
             }

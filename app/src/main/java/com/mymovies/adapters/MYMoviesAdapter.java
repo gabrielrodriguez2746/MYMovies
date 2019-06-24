@@ -19,7 +19,7 @@ import java.util.Objects;
 
 public class MYMoviesAdapter extends PagedListAdapter<Movie, MYMoviesAdapter.MYMoviesViewHolder> {
 
-    // TODO This should be provided as a factory
+    // Gabriel This should be provided as a factory
     private ViewGroup.LayoutParams defaultLayoutParameters;
     private MYMoviesAdapter.OnMovieClicked listener;
 
@@ -77,7 +77,7 @@ public class MYMoviesAdapter extends PagedListAdapter<Movie, MYMoviesAdapter.MYM
 
         @Override
         public boolean areContentsTheSame(@NonNull Movie oldItem, @NonNull Movie newItem) {
-            return oldItem.equals(newItem); // TODO Fix this with real logic
+            return oldItem.equals(newItem); // Gabriel Fix this with real logic
         }
     }
 
