@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,10 +21,10 @@ import androidx.lifecycle.ViewModelProviders;
 import com.mymovies.R;
 import com.mymovies.data.models.Movie;
 import com.mymovies.databinding.FragmentMovieDetailBinding;
-import com.mymovies.viewmodels.DetailMoviesViewModel;
-import com.mymovies.viewmodels.FavoritesMoviesDetailViewModel;
-import com.mymovies.viewmodels.PopularMoviesDetailViewModel;
-import com.mymovies.viewmodels.TopRatedMoviesDetailViewModel;
+import com.mymovies.viewmodels.detail.DetailMoviesViewModel;
+import com.mymovies.viewmodels.detail.FavoritesMoviesDetailViewModel;
+import com.mymovies.viewmodels.detail.PopularMoviesDetailViewModel;
+import com.mymovies.viewmodels.detail.TopRatedMoviesDetailViewModel;
 import com.mymovies.widget.ReviewsWidget;
 import com.mymovies.widget.TrailersWidget;
 
@@ -49,6 +51,18 @@ public class DetailMovieFragment extends Fragment {
     public void onAttach(Context context) {
         AndroidSupportInjection.inject(this);
         super.onAttach(context);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(false);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
     }
 
     @Nullable

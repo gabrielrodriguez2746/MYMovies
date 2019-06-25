@@ -1,23 +1,26 @@
 package com.mymovies.activities;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.animation.AnticipateOvershootInterpolator;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
+import androidx.transition.ChangeBounds;
+import androidx.transition.TransitionManager;
 
 import com.mymovies.R;
+import com.mymovies.databinding.ActivityMainBinding;
 import com.mymovies.fragments.DetailMovieFragment;
-import com.mymovies.fragments.FavoritesMoviesListFragment;
-import com.mymovies.fragments.PopularMoviesListFragment;
-import com.mymovies.fragments.TopRatedMoviesListFragment;
 import com.mymovies.listeners.OnFragmentInteraction;
+import com.mymovies.viewmodels.main.FavoritesMoviesViewModel;
+import com.mymovies.viewmodels.main.PopularMoviesViewModel;
+import com.mymovies.viewmodels.main.TopRatedMoviesViewModel;
 
 import javax.inject.Inject;
 
@@ -28,34 +31,51 @@ import dagger.android.support.HasSupportFragmentInjector;
 
 public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector, OnFragmentInteraction {
 
+    private static final long ANIMATION_DURATION = 400L;
+
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
 
+    private ActivityMainBinding binding;
     private NavController navController;
+
+    private ChangeBounds changeBoundsTransition;
+
+    private ConstraintSet detailConstraintSet;
+    private ConstraintSet homeConstraintSet;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-        DataBindingUtil.setContentView(this, R.layout.activity_main);
+        initBoundTransition();
+        initConstrains();
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         navController = Navigation.findNavController(this, R.id.fgNavController);
+        NavigationUI.setupWithNavController(binding.bnHome, navController);
         NavigationUI.setupActionBarWithNavController(this, navController);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-        return true;
+    private void initConstrains() {
+        detailConstraintSet = new ConstraintSet();
+        detailConstraintSet.clone(this, R.layout.activity_main_detail_constains);
+        homeConstraintSet = new ConstraintSet();
+        homeConstraintSet.clone(this, R.layout.activity_main_home_constrains);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
+    private void initBoundTransition() {
+        changeBoundsTransition = new ChangeBounds();
+        changeBoundsTransition.setDuration(ANIMATION_DURATION);
+        changeBoundsTransition.setInterpolator(new AnticipateOvershootInterpolator(1.0f));
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        return navController.navigateUp();
+        boolean navigateUp = navController.navigateUp();
+        if (navigateUp) {
+            createActivityTransition(homeConstraintSet);
+        }
+        return navigateUp;
     }
 
     @Override
@@ -67,13 +87,19 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     public void onItemClicked(String fragment, String id) {
         Bundle data = new Bundle();
         data.putInt(DetailMovieFragment.MOVIE_ID_KEY, Integer.valueOf(id));
-        if (fragment.equals(PopularMoviesListFragment.POPULAR_FRAGMENT)) {
+        if (fragment.equals(PopularMoviesViewModel.class.getSimpleName())) {
             data.putInt(DetailMovieFragment.MOVIE_DETAIL_TYPE, 0);
-        } else if (fragment.equals(TopRatedMoviesListFragment.TOP_RATED_FRAGMENT)) {
+        } else if (fragment.equals(TopRatedMoviesViewModel.class.getSimpleName())) {
             data.putInt(DetailMovieFragment.MOVIE_DETAIL_TYPE, 1);
-        } else if (fragment.equals(FavoritesMoviesListFragment.FAVORITES_FRAGMENT)) {
+        } else if (fragment.equals(FavoritesMoviesViewModel.class.getSimpleName())) {
             data.putInt(DetailMovieFragment.MOVIE_DETAIL_TYPE, 2);
         }
+        createActivityTransition(detailConstraintSet);
         navController.navigate(R.id.action_detail, data);
+    }
+
+    private void createActivityTransition(ConstraintSet constraintSet) {
+        TransitionManager.beginDelayedTransition(binding.clParent, changeBoundsTransition);
+        constraintSet.applyTo(binding.clParent);
     }
 }

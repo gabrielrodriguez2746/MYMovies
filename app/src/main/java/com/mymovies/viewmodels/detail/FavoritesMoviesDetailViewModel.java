@@ -1,20 +1,20 @@
-package com.mymovies.viewmodels;
+package com.mymovies.viewmodels.detail;
 
 import com.mymovies.repositories.BaseExtraMoviesInfoRepository;
-import com.mymovies.repositories.BaseTopRatedMoviesRepository;
+import com.mymovies.repositories.BaseFavoritesMoviesRepository;
 
 import javax.inject.Inject;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class TopRatedMoviesDetailViewModel extends DetailMoviesViewModel {
+public class FavoritesMoviesDetailViewModel extends DetailMoviesViewModel {
 
-    private BaseTopRatedMoviesRepository repository;
+    private BaseFavoritesMoviesRepository repository;
 
     @Inject
-    public TopRatedMoviesDetailViewModel(BaseTopRatedMoviesRepository repository,
-                                         BaseExtraMoviesInfoRepository infoRepository) {
+    public FavoritesMoviesDetailViewModel(BaseFavoritesMoviesRepository repository,
+                                          BaseExtraMoviesInfoRepository infoRepository) {
         super(infoRepository);
         this.repository = repository;
     }
@@ -32,7 +32,7 @@ public class TopRatedMoviesDetailViewModel extends DetailMoviesViewModel {
     }
 
     private Single<Boolean> getAllMovieDataZip(int movieId) {
-        return Single.zip(repository.getSingleMovieFromId(movieId)
+        return Single.zip(repository.getFavoriteMovieById(movieId)
                         .subscribeOn(AndroidSchedulers.mainThread())
                         .doOnSuccess((result) -> movieLiveData.postValue(result)),
                 getReviewsSingle(movieId),

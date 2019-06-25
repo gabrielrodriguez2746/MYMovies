@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,11 +20,11 @@ import com.mymovies.R;
 import com.mymovies.adapters.FavoritesMoviesAdapter;
 import com.mymovies.adapters.MYMoviesAdapter;
 import com.mymovies.data.models.Movie;
-import com.mymovies.databinding.FragmentMoviesListBinding;
+import com.mymovies.databinding.FragmentFavoriesListBinding;
 import com.mymovies.decorators.MediaSpaceDecorator;
 import com.mymovies.listeners.OnFragmentInteraction;
 import com.mymovies.models.RecyclerViewConfiguration;
-import com.mymovies.viewmodels.FavoritesMoviesViewModel;
+import com.mymovies.viewmodels.main.FavoritesMoviesViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -35,9 +37,7 @@ import dagger.android.support.AndroidSupportInjection;
 
 public class FavoritesMoviesListFragment extends MoviesListRestoreStateFragment implements MYMoviesAdapter.OnMovieClicked {
 
-    public static String FAVORITES_FRAGMENT = "FAVORITES_FRAGMENT";
-
-    private FragmentMoviesListBinding binding;
+    private FragmentFavoriesListBinding binding;
     private FavoritesMoviesAdapter adapter;
     private FavoritesMoviesViewModel viewModel;
 
@@ -50,6 +50,18 @@ public class FavoritesMoviesListFragment extends MoviesListRestoreStateFragment 
         super.onAttach(context);
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(false);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,7 +70,7 @@ public class FavoritesMoviesListFragment extends MoviesListRestoreStateFragment 
             adapter = new FavoritesMoviesAdapter(displayMetrics, this);
             int rowsNumber = Objects.requireNonNull(getContext()).getResources().getInteger(R.integer.app_adapter_rows);
             layoutManager = new GridLayoutManager(getContext(), rowsNumber);
-            binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies_list, container, false);
+            binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favories_list, container, false);
             binding.setRecyclerConfiguration(new RecyclerViewConfiguration(
                     layoutManager, adapter,
                     new MediaSpaceDecorator((getResources().getDimensionPixelSize(R.dimen.space_small)))));
@@ -79,6 +91,7 @@ public class FavoritesMoviesListFragment extends MoviesListRestoreStateFragment 
     private void processItems(List<Movie> movies) {
         boolean adapterWasEmpty = adapter.getItemCount() == 0;
         adapter.submitList(movies);
+        binding.setHasItems(adapter.getItemCount() != 0);
         if (adapterWasEmpty && lastVisibleIndex != -1) {
             layoutManager.scrollToPosition(lastVisibleIndex);
         }
@@ -94,6 +107,6 @@ public class FavoritesMoviesListFragment extends MoviesListRestoreStateFragment 
     @Override
     public void onMovieClicked(int movieId) {
         ((OnFragmentInteraction) Objects.requireNonNull(getActivity()))
-                .onItemClicked(FAVORITES_FRAGMENT, String.valueOf(movieId));
+                .onItemClicked(viewModel.getClass().getSimpleName(), String.valueOf(movieId));
     }
 }

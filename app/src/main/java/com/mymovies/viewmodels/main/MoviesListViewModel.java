@@ -1,4 +1,4 @@
-package com.mymovies.viewmodels;
+package com.mymovies.viewmodels.main;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -9,25 +9,20 @@ import androidx.paging.PageKeyedDataSource;
 import androidx.paging.PagedList;
 
 import com.mymovies.data.models.Movie;
-import com.mymovies.repositories.BasePopularMoviesRepository;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class PopularMoviesViewModel extends ViewModel {
+public abstract class MoviesListViewModel extends ViewModel {
 
-    private BasePopularMoviesRepository repository;
     private CompositeDisposable compositeDisposable;
-    private MoviesFactory dataFactory;
     private LiveData<PagedList<Movie>> itemsLiveData;
+    private MoviesFactory dataFactory;
 
-    @Inject
-    public PopularMoviesViewModel(BasePopularMoviesRepository repository) {
-        this.repository = repository;
+    MoviesListViewModel() {
         compositeDisposable = new CompositeDisposable();
         dataFactory = new MoviesFactory(new DataController()); // Gabriel This should be also injected
     }
@@ -50,6 +45,9 @@ public class PopularMoviesViewModel extends ViewModel {
         return itemsLiveData;
     }
 
+    abstract Single<List<Movie>> getInitialMovies();
+
+    abstract Single<List<Movie>> getMoreMovies(int page);
 
     // Gabriel This should not be inner
     class DataController extends PageKeyedDataSource<Integer, Movie> {
@@ -57,7 +55,7 @@ public class PopularMoviesViewModel extends ViewModel {
         @Override
         public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Integer, Movie> callback) {
             compositeDisposable.add(
-                    repository.getPopularMoviesByPage(1)
+                    getInitialMovies()
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
                                     (result) -> processData(callback, result),
@@ -77,7 +75,7 @@ public class PopularMoviesViewModel extends ViewModel {
         @Override
         public void loadAfter(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Integer, Movie> callback) {
             compositeDisposable.add(
-                    repository.getPopularMoviesByPage(params.key)
+                    getMoreMovies(params.key)
                             .observeOn(AndroidSchedulers.mainThread()).subscribe((result) ->
                                     callback.onResult(result, result.isEmpty() ? null : params.key + 1),
                             (error) -> {

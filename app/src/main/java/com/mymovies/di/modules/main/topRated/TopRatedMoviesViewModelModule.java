@@ -3,7 +3,7 @@ package com.mymovies.di.modules.main.topRated;
 import androidx.lifecycle.ViewModel;
 
 import com.mymovies.di.keys.ViewModelKey;
-import com.mymovies.viewmodels.TopRatedMoviesViewModel;
+import com.mymovies.viewmodels.main.TopRatedMoviesViewModel;
 
 import dagger.Binds;
 import dagger.Module;

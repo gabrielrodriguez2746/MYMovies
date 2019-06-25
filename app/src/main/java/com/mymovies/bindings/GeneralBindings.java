@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
+import androidx.databinding.BindingConversion;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -74,6 +75,11 @@ public class GeneralBindings {
     public static void setImageUrl(ImageView imageView, String imageUrl) {
         Picasso.get().load(imageUrl)
                 .into(imageView);
+    }
+
+    @BindingConversion
+    public static int booleanToVisibility(boolean visible) {
+        return visible ? View.VISIBLE : View.GONE;
     }
 
 }

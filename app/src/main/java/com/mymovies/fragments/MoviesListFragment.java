@@ -4,11 +4,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
@@ -22,7 +26,10 @@ import com.mymovies.databinding.FragmentMoviesListBinding;
 import com.mymovies.decorators.MediaSpaceDecorator;
 import com.mymovies.listeners.OnFragmentInteraction;
 import com.mymovies.models.RecyclerViewConfiguration;
-import com.mymovies.viewmodels.PopularMoviesViewModel;
+import com.mymovies.viewmodels.main.FavoritesMoviesViewModel;
+import com.mymovies.viewmodels.main.MoviesListViewModel;
+import com.mymovies.viewmodels.main.PopularMoviesViewModel;
+import com.mymovies.viewmodels.main.TopRatedMoviesViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,13 +39,11 @@ import javax.inject.Inject;
 
 import dagger.android.support.AndroidSupportInjection;
 
-public class PopularMoviesListFragment extends MoviesListRestoreStateFragment implements MYMoviesAdapter.OnMovieClicked {
-
-    public static final String POPULAR_FRAGMENT = "POPULAR_FRAGMENT";
+public class MoviesListFragment extends MoviesListRestoreStateFragment implements MYMoviesAdapter.OnMovieClicked {
 
     private FragmentMoviesListBinding binding;
     private MYMoviesAdapter adapter;
-    private PopularMoviesViewModel viewModel;
+    private MoviesListViewModel viewModel;
 
     @Inject
     ViewModelProvider.Factory factory;
@@ -47,6 +52,18 @@ public class PopularMoviesListFragment extends MoviesListRestoreStateFragment im
     public void onAttach(Context context) {
         AndroidSupportInjection.inject(this);
         super.onAttach(context);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.toolbar_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Nullable
@@ -74,6 +91,22 @@ public class PopularMoviesListFragment extends MoviesListRestoreStateFragment im
         viewModel.getItemsLiveData().observe(getViewLifecycleOwner(), this::processItems);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        viewModel.getItemsLiveData().removeObservers(getViewLifecycleOwner());
+        if (item.getItemId() == R.id.destination_top_rated) {
+            Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity()))
+                    .getSupportActionBar()).setTitle(getString(R.string.app_top_rated));
+            viewModel = ViewModelProviders.of(this, factory).get(TopRatedMoviesViewModel.class);
+        } else {
+            Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity()))
+                    .getSupportActionBar()).setTitle(getString(R.string.app_popular));
+            viewModel = ViewModelProviders.of(this, factory).get(PopularMoviesViewModel.class);
+        }
+        viewModel.getItemsLiveData().observe(getViewLifecycleOwner(), this::processItems);
+        return super.onOptionsItemSelected(item);
+    }
+
     private void processItems(PagedList<Movie> movies) {
         boolean adapterWasEmpty = adapter.getItemCount() == 0;
         adapter.submitList(movies);
@@ -85,7 +118,7 @@ public class PopularMoviesListFragment extends MoviesListRestoreStateFragment im
     @Override
     public void onMovieClicked(int movieId) {
         ((OnFragmentInteraction) Objects.requireNonNull(getActivity()))
-                .onItemClicked(POPULAR_FRAGMENT, String.valueOf(movieId));
+                .onItemClicked(viewModel.getClass().getSimpleName(), String.valueOf(movieId));
     }
 
     @NotNull

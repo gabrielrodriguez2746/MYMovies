@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/destination_popular"
-        android:name="com.mymovies.fragments.PopularMoviesListFragment"
+        android:name="com.mymovies.fragments.MoviesListFragment"
         android:label="@string/app_popular">
 
         <action
@@ -29,16 +29,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/destination_top_rated"
-        android:name="com.mymovies.fragments.TopRatedMoviesListFragment"
-        android:label="@string/app_top_rated">
-
-        <action
-            android:id="@+id/action_detail"
-            app:destination="@id/destination_detail" />
-    </fragment>
-
-    <fragment
         android:id="@+id/destination_favorites"
         android:name="com.mymovies.fragments.FavoritesMoviesListFragment"
         android:label="@string/app_favorites">
@@ -47,4 +37,5 @@
             android:id="@+id/action_detail"
             app:destination="@id/destination_detail" />
     </fragment>
+
 </navigation>

@@ -14,4 +14,7 @@
     <string name="app_general_information">General Information</string>
     <string name="app_author">Author: %1$s</string>
     <string name="app_favorite_toggle">Favorite toggle</string>
+    <string name="app_home_label">Movies</string>
+    <string name="app_favorites_label">Favorites</string>
+    <string name="app_favorites_explanation">Add favorites movies from details to populate this list</string>
 </resources>
