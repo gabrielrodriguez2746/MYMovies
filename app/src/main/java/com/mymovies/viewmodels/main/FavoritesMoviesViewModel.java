@@ -1,4 +1,4 @@
-package com.mymovies.viewmodels;
+package com.mymovies.viewmodels.main;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

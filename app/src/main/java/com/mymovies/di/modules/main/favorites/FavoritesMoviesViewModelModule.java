@@ -3,7 +3,7 @@ package com.mymovies.di.modules.main.favorites;
 import androidx.lifecycle.ViewModel;
 
 import com.mymovies.di.keys.ViewModelKey;
-import com.mymovies.viewmodels.FavoritesMoviesViewModel;
+import com.mymovies.viewmodels.main.FavoritesMoviesViewModel;
 
 import dagger.Binds;
 import dagger.Module;

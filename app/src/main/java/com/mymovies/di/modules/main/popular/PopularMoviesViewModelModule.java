@@ -3,7 +3,7 @@ package com.mymovies.di.modules.main.popular;
 import androidx.lifecycle.ViewModel;
 
 import com.mymovies.di.keys.ViewModelKey;
-import com.mymovies.viewmodels.PopularMoviesViewModel;
+import com.mymovies.viewmodels.main.PopularMoviesViewModel;
 
 import dagger.Binds;
 import dagger.Module;

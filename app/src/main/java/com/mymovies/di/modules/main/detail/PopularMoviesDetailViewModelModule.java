@@ -3,9 +3,9 @@ package com.mymovies.di.modules.main.detail;
 import androidx.lifecycle.ViewModel;
 
 import com.mymovies.di.keys.ViewModelKey;
-import com.mymovies.viewmodels.FavoritesMoviesDetailViewModel;
-import com.mymovies.viewmodels.PopularMoviesDetailViewModel;
-import com.mymovies.viewmodels.TopRatedMoviesDetailViewModel;
+import com.mymovies.viewmodels.detail.FavoritesMoviesDetailViewModel;
+import com.mymovies.viewmodels.detail.PopularMoviesDetailViewModel;
+import com.mymovies.viewmodels.detail.TopRatedMoviesDetailViewModel;
 
 import dagger.Binds;
 import dagger.Module;
